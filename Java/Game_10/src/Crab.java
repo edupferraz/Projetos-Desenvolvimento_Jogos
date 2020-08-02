@@ -39,6 +39,25 @@ public class Crab {
 			}
 			curFrames = 0;
 		}
+		
+		verificaColisao();
+	}
+	
+	public void verificaColisao() {
+		
+		if(Game.isPressed) {
+			Game.isPressed = false;
+			if(Game.mx >= x && Game.mx <= x + 40) {
+				if(Game.my >= y && Game.my <= y + 40) {
+					Game.crabs.remove(this);
+					
+					Game.score++;
+					Game.smokes.add(new Smoke((int)x, (int)y));
+					return;
+				}
+			}
+		}
+		
 	}
 	
 	public void render(Graphics g) {

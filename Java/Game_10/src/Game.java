@@ -1,21 +1,25 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable, MouseListener{
 
 	//Declaração das Variáveis
 	public static int Width = 480;
 	public static int Height = 480;
 	
 	public static List<Crab> crabs;
+	public static List<Smoke> smokes;
 	
 	public CrabSpawner spawner;
 	
@@ -23,12 +27,21 @@ public class Game extends Canvas implements Runnable{
 	
 	public static Rectangle maskBuraco;
 	
+	public static int mx, my;
+	
+	public static boolean isPressed = false;
+	
+	public static int score = 0;
+	
 	public Game() {
 		this.setPreferredSize(new Dimension(Width, Height));
+		this.addMouseListener(this);
 		
 		spritesheet = new Spritesheet("/spritesheet.png");
 		
 		crabs = new ArrayList<>();
+		
+		smokes = new ArrayList<>();
 		
 		spawner = new CrabSpawner();
 		
@@ -40,6 +53,10 @@ public class Game extends Canvas implements Runnable{
 		spawner.update();
 		for(int i = 0; i < crabs.size(); i++) {
 			crabs.get(i).update();
+		}
+		
+		for(int i = 0; i < smokes.size(); i++) {
+			smokes.get(i).update();
 		}
 	}
 	
@@ -59,6 +76,14 @@ public class Game extends Canvas implements Runnable{
 		for(int i = 0; i < crabs.size(); i++) {
 			crabs.get(i).render(g);
 		}
+		
+		for(int i = 0; i < smokes.size(); i++) {
+			smokes.get(i).render(g);
+		}
+		
+		g.setColor(Color.white);
+		g.setFont(new Font("arial", Font.BOLD, 22));
+		g.drawString("Score: " + score , 10, 20);
 		
 		g.dispose();
 		bs.show();
@@ -111,5 +136,37 @@ public class Game extends Canvas implements Runnable{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		isPressed = true;
+		mx = e.getX();
+		my = e.getY();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
