@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,20 @@ public class Game extends Canvas implements Runnable{
 	
 	public CrabSpawner spawner;
 	
+	public static Spritesheet spritesheet;
+	
+	public static Rectangle maskBuraco;
+	
 	public Game() {
 		this.setPreferredSize(new Dimension(Width, Height));
+		
+		spritesheet = new Spritesheet("/spritesheet.png");
 		
 		crabs = new ArrayList<>();
 		
 		spawner = new CrabSpawner();
+		
+		maskBuraco = new Rectangle(Width/2 - 25, Height/2 - 25, 50, 50);
 		
 	}
 	
@@ -45,7 +54,7 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Width, Height);
 		g.setColor(Color.white);
-		g.fillOval(Width/2 - 35, Height/2 - 35, 70, 70);
+		g.fillOval(Width/2 - 25, Height/2 - 25, 50, 50);
 		
 		for(int i = 0; i < crabs.size(); i++) {
 			crabs.get(i).render(g);
